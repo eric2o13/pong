@@ -71,7 +71,7 @@ const newDirectionFromSide = state => merge(state)({
 })
 const nextContains = state => xs => xs.some((pos) => equals(pos)(nextBallPos(state)))
 const nextCpuPositions = state => xs => xs.map((o) => addY(o)(state.ballDirection))
-const nextPlayerPos = state => o => hasMoves(state) ? nextPosition(o) : state.player
+const nextPlayerPos = state => o => hasMoves(state) ? nextPosition(o) : o
 const nextPlayerPositions = state => xs => xs.map((o) => nextPlayerPos(state)(o))
 const nextPositions = xs => xs.map(o => nextPosition(o))
 const nextPosition = pos => hasMoves(state)? add(pos)(index(0)(state.moves)) : pos

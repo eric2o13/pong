@@ -74,7 +74,7 @@ const nextCpuPositions = state => xs => xs.map((o) => addY(o)(state.ballDirectio
 const nextPlayerPos = state => o => hasMoves(state) ? nextPosition(o) : o
 const nextPlayerPositions = state => xs => xs.map((o) => nextPlayerPos(state)(o))
 const nextPositions = xs => xs.map(o => nextPosition(o))
-const nextPosition = pos => hasMoves(state)? add(pos)(index(0)(state.moves)) : pos
+const nextPosition = pos => add(pos)(index(0)(state.moves))
 const nextBallPos = state => add(state.ball)(state.ballDirection)
 const playerWillCrash = state => isValid(state)(nextPlayerPositions(state)(state.player)) 
 const shouldNotAdvance = state => any(isTrue)([
@@ -82,7 +82,7 @@ const shouldNotAdvance = state => any(isTrue)([
     ballHitsBar(state),
     ballWillHitSide(state)
 ])
-const withinX = state => o => and(o.x >= 0)(o.x < state.cols)
+const withinX = state => o => and(o.x >= 0)(o.x <= state.cols)
 const withinY = state => o => and(o.y > 0)(o.y < state.rows)
 const withinRange = state => o => (withinX(state)(o) && withinY(state)(o))
 const willScoreLeft = state => nextBallPos(state).x === -1

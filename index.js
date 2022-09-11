@@ -74,7 +74,7 @@ const nextCpuPositions = state => xs => xs.map((o) => addY(o)(state.ballDirectio
 const nextPlayerPos = state => o => hasMoves(state) ? nextPosition(o) : o
 const nextPlayerPositions = state => xs => xs.map((o) => nextPlayerPos(state)(o))
 const nextPositions = xs => xs.map(o => nextPosition(o))
-const nextPosition = pos => add(pos)(index(0)(state.moves))
+const nextPosition = pos => addY(pos)(index(0)(state.moves))
 const nextBallPos = state => add(state.ball)(state.ballDirection)
 const playerWillCrash = state => isValid(state)(nextPlayerPositions(state)(state.player)) 
 const shouldNotAdvance = state => any(isTrue)([
@@ -83,8 +83,8 @@ const shouldNotAdvance = state => any(isTrue)([
     ballWillHitSide(state)
 ])
 const withinX = state => o => and(o.x >= 0)(o.x <= state.cols)
-const withinY = state => o => and(o.y > 0)(o.y < state.rows)
-const withinRange = state => o => (withinX(state)(o) && withinY(state)(o))
+const withinY = state => o => and(o.y >= 0)(o.y < state.rows)
+const withinRange = state => o => (and(withinX(state)(o))(withinY(state)(o)))
 const willScoreLeft = state => nextBallPos(state).x === -1
 const willScoreRight = state => nextBallPos(state).x === state.cols
 const willHitTop = state => nextBallPos(state).y === -1
@@ -97,21 +97,21 @@ const wonGame = state => merge(State.initialState())({
 
 const State = {}
 State.initialState = () => ({
-    cols: 36,
-    rows: 24,   
+    cols: 40,
+    rows: 22,   
     cpu: [
-        {x: 35, y: 10},
-        {x: 35, y: 11},
-        {x: 35, y: 12},
-        {x: 35, y: 13},
-        {x: 35, y: 14},
+        {x: 39, y: 8},
+        {x: 39, y: 9},
+        {x: 39, y: 10},
+        {x: 39, y: 11},
+        {x: 39, y: 12},
     ],
     player: [
+        {x: 0, y: 8},
+        {x: 0, y: 9},
         {x: 0, y: 10},
         {x: 0, y: 11},
-        {x: 0, y: 12},
-        {x: 0, y: 13},
-        {x: 0, y: 14}
+        {x: 0, y: 12}
     ],
     moves: [],
     ball: {x: 10, y: 10},
@@ -192,4 +192,4 @@ process.stdin.on('keypress', (str, key) => {
 
 const show = () => console.log('\x1Bc' + Matrix.toString(Matrix.fromState(state)))
 const step = () => state = State.next(state)
-setInterval(() => { step(); show() }, 40)
+setInterval(() => { step(); show()}, 40)

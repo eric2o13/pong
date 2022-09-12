@@ -51,9 +51,9 @@ const fromSideDirection = state => pipe(
 )(state)
 const fromBarDirection = state => pipe(
     ifelse(defending)(
-        ifelse(mightBe)(east)(southEast)
-    )(ifelse(mightBe)(west)(northWest))
-)(state) 
+        ifelse(mightBe)(east)(ifelse(mightBe)(northEast)(southEast))
+    )(ifelse(mightBe)(west)(ifelse(mightBe)(southWest)(northWest)))
+)(state)
 const gameEnded = state => or(state.lost > 9)(state.won > 9)
 const goalAgainst = state => state.ball.x === 0;
 const hasMoves = state => state.moves.length > 0

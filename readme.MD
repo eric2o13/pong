@@ -4,8 +4,10 @@ Javascript FP approach to Pong.
 ## Usage
 
 ```
-$ node index.js
+$ node cli.js
 ```
+
+or open `index.html` in your browser.
 
 ## Terminal Example
 
